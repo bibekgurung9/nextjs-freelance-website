@@ -5,6 +5,7 @@ import { LayoutDashboard } from "lucide-react";
 import { redirect } from "next/navigation";
 import { TitleForm } from "./_components/title-form";
 import { DescriptionForm } from "./_components/description-form";
+import { CategoryForm } from "./_components/category-form";
 const JobIdPage = async ({
   params
 }: {
@@ -21,6 +22,12 @@ const JobIdPage = async ({
       id: params.jobId,
     }
   })
+
+  const categories = await db.category.findMany({
+    orderBy: {
+      name: "asc",
+    },
+  });
 
   if(!job){
     return redirect("/");
@@ -67,6 +74,14 @@ const JobIdPage = async ({
           <DescriptionForm
               initialData={job}
               jobId={job.id}
+          />
+          <CategoryForm
+              initialData={job}
+              jobId={job.id}
+              options={categories.map((category) => ({
+                label: category.name,
+                value: category.id,
+              }))}
           />
         </div>
       </div>
