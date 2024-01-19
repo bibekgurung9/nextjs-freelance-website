@@ -39,8 +39,9 @@ const { isSubmitting, isValid } = form.formState;
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
 
     try{
-      const response = await axios.post("/api/job", values);
+      const response = await axios.post("/api/jobs", values);
       router.push(`/client/jobs/${response.data.id}`)
+      toast.success("Job Created Successfully");
     } catch{
       toast.error("Something Went Wrong!")
     }
