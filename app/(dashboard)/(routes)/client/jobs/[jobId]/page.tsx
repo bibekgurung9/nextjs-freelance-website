@@ -1,11 +1,12 @@
 import { IconBadge } from "@/components/icon-badge";
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
-import { LayoutDashboard } from "lucide-react";
+import { CircleDollarSign, LayoutDashboard, ListChecks } from "lucide-react";
 import { redirect } from "next/navigation";
 import { TitleForm } from "./_components/title-form";
 import { DescriptionForm } from "./_components/description-form";
 import { CategoryForm } from "./_components/category-form";
+import { PriceForm } from "./_components/price-form ";
 const JobIdPage = async ({
   params
 }: {
@@ -83,6 +84,26 @@ const JobIdPage = async ({
                 value: category.id,
               }))}
           />
+        </div>
+        <div className="space-y-6">
+          <div>
+            <div className="flex items-center gap-x-2">
+              <IconBadge icon={ListChecks} />
+              <h2 className="text-2xl">Job Requirements</h2>
+            </div>
+            <div>
+              Needed Requirements...
+            </div>
+          </div>
+
+          <div className="flex items-center gap-x-2">
+            <IconBadge icon={CircleDollarSign} />
+            <h2 className="text-2xl">Project Budget </h2>
+          </div>
+          <PriceForm
+            initialData={job}
+            jobId={job.id}
+           />
         </div>
       </div>
     </div>
