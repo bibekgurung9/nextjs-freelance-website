@@ -1,29 +1,37 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
+// Prisma client generator configuration
 generator client {
   provider = "prisma-client-js"
 }
 
+// MongoDB datasource configuration
 datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
   relationMode = "prisma"
 }
 
+// Model representing a job posting
 model Job {
   id String @id @default(auto()) @map("_id") @db.ObjectId
-  userId String
+  userId String // User who posted the job
   title String 
   description String?
   imageUrl String?
   price String?
   isPublished Boolean @default(false)
 
-  categoryId String? @db.ObjectId 
+  categoryId String? @db.ObjectId // ID of the associated category
   category Category? @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 
-  attachments Attachment[]
+  // Freelancer job progress
+  freelancerProgress FreelancerProgress[]
+  
+  chapters Chapter[] // Chapters associated with the job
+  attachments Attachment[] // Attachments related to the job
+  payments Payment[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -31,21 +39,97 @@ model Job {
   @@index([categoryId])
 }
 
-model Category{
+// Model representing job categories
+model Category {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   name String @unique
-  jobs Job[]
+  jobs Job[] // Jobs associated with the category
 }
 
-model Attachment{
+// Model representing attachments related to a job
+model Attachment {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   name String
   url String 
   
-  jobId String @db.ObjectId 
+  jobId String @db.ObjectId // ID of the associated job
   job Job @relation(fields: [jobId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   @@index([jobId])
+}
+
+// Model representing chapters or sections associated with a job
+model Chapter {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  title String
+  description String? 
+  position Int
+  isPublished Boolean @default(false)
+  
+  MuxData MuxData? // Multimedia data associated with the chapter
+
+  jobId String @db.ObjectId // ID of the associated job
+  job Job @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  freelancerProgress FreelancerProgress[] 
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@index([jobId])
+}
+
+// Model representing multimedia data associated with a chapter
+model MuxData {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  assetId String
+
+  chapterId String @unique @db.ObjectId // ID of the associated chapter
+  chapter Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+}
+
+// Model representing the progress of freelancers on a particular chapter of a job
+model FreelancerProgress {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String
+
+  chapterId String @db.ObjectId // ID of the associated chapter
+  chapter Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+
+  isCompleted Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  jobId String @db.ObjectId // ID of the associated job
+  job Job @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  
+  @@index([chapterId])
+  @@unique([userId, chapterId])
+}
+
+model Payment {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String @db.ObjectId
+
+  jobId String @db.ObjectId // ID of the associated job
+  job Job @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  amount String // Amount of the payment
+  isCompleted Boolean @default(false) // Indicates whether the payment is completed
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([jobId])
+}
+
+model StripeClient{
+  id String @id @default(auto()) @map("_id") @db.ObjectId 
+  userId String @db.ObjectId @unique
+  stripeClientId String @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
