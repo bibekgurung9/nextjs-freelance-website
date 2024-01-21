@@ -20,7 +20,7 @@ model Job {
   title String 
   description String?
   imageUrl String?
-  price String?
+  price Int?
   isPublished Boolean @default(false)
 
   categoryId String? @db.ObjectId // ID of the associated category
