@@ -51,7 +51,7 @@ export const PriceForm = ({
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
       try{
         await axios.patch(`/api/jobs/${jobId}`, values);
-        toast.success("Job Desciption Updated!");
+        toast.success("JobPrice Updated!");
         toggleEdit();
         router.refresh();
       } catch(error){
