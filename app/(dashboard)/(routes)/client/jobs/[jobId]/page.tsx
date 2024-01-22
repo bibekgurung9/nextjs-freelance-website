@@ -7,6 +7,8 @@ import { TitleForm } from "./_components/title-form";
 import { DescriptionForm } from "./_components/description-form";
 import { CategoryForm } from "./_components/category-form";
 import { PriceForm } from "./_components/price-form ";
+import { ChaptersForm } from "./_components/chapters-form";
+
 const JobIdPage = async ({
   params
 }: {
@@ -21,6 +23,13 @@ const JobIdPage = async ({
   const job = await db.job.findUnique({
     where: {
       id: params.jobId,
+    },
+    include: {
+      chapters: {
+        orderBy: {
+          position: "desc",
+        }
+      }
     }
   })
 
@@ -37,9 +46,9 @@ const JobIdPage = async ({
   const requiredFields = [
     job.title,
     job.description,
-    job.imageUrl ,
     job.price ,
     job.categoryId ,
+    job.chapters.some(chapter => chapter.isPublished),
   ];
 
   const totalFields = requiredFields.length;
@@ -89,11 +98,12 @@ const JobIdPage = async ({
           <div>
             <div className="flex items-center gap-x-2">
               <IconBadge icon={ListChecks} />
-              <h2 className="text-2xl">Job Requirements</h2>
+              <h2 className="text-2xl">Job Chapters</h2>
             </div>
-            <div>
-              Needed Requirements...
-            </div>
+            <ChaptersForm
+              initialData={job}
+              jobId={job.id}
+          />
           </div>
 
           <div className="flex items-center gap-x-2">
