@@ -22,6 +22,7 @@ model Job {
   imageUrl String?
   price Int?
   isPublished Boolean @default(false)
+  
 
   categoryId String? @db.ObjectId // ID of the associated category
   category Category? @relation(fields: [categoryId], references: [id], onDelete: Cascade)
@@ -67,6 +68,7 @@ model Chapter {
   description String? 
   position Int
   isPublished Boolean @default(false)
+  isApproved Boolean @default(false)
   
   MuxData MuxData? // Multimedia data associated with the chapter
 
