@@ -8,11 +8,13 @@ import { DescriptionForm } from "./_components/description-form";
 import { CategoryForm } from "./_components/category-form";
 import { PriceForm } from "./_components/price-form ";
 import { ChaptersForm } from "./_components/chapters-form";
+import { Banner } from "@/components/banner";
+import { Actions } from "./_components/actions";
 
 const JobIdPage = async ({
   params
 }: {
-  params: { jobId: string }
+  params: { jobId: string; isPublished:boolean; }
 }) => {
   const userId = auth();
 
@@ -56,8 +58,16 @@ const JobIdPage = async ({
 
   const completionText = `(${completedFields}/${totalFields})`
 
+  const isComplete = requiredFields.every(Boolean);
+
 
   return (
+    <>
+    {!job.isPublished && (
+      <Banner 
+        label="This job is unpublished. It will not be visible to the freelancers"
+         />
+    )}
     <div className="p-6">
       <div className="flex items-center justify-between">
         <div className="flex flex-col gap-y-2">
@@ -68,6 +78,12 @@ const JobIdPage = async ({
             Complete All Fields {completionText}
           </span>
         </div>
+        {/*Add Actions Here */}
+        <Actions
+          disabled={!isComplete}
+          jobId={params.jobId}
+          isPublished={params.isPublished}
+           />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
         <div>
@@ -117,6 +133,7 @@ const JobIdPage = async ({
         </div>
       </div>
     </div>
+    </>
   );
 }
 
