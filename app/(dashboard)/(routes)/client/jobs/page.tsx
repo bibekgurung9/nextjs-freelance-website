@@ -6,7 +6,7 @@ const JobPage = () => {
   return (
     <div>
       <Link href="/client/create">
-      <Button>
+      <Button className='m-4'>
         Add New Jobs
       </Button>
       </Link>
