@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 // Prisma client generator configuration
 generator client {
   provider = "prisma-client-js"
@@ -11,6 +8,35 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
   relationMode = "prisma"
+}
+model Account {
+  id  String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId             String @db.ObjectId
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?  @db.String
+  access_token       String?  @db.String
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?  @db.String
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+//User Model
+model User {
+  id  String  @id @default(auto()) @map("_id") @db.ObjectId
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?
+  accounts      Account[]
 }
 
 // Model representing a job posting
@@ -23,7 +49,6 @@ model Job {
   price Int?
   isPublished Boolean @default(false)
   
-
   categoryId String? @db.ObjectId // ID of the associated category
   category Category? @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 
