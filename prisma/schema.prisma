@@ -4,6 +4,7 @@
 // Prisma client generator configuration
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
 // MongoDB datasource configuration
@@ -23,7 +24,6 @@ model Job {
   price Int?
   isPublished Boolean @default(false)
   
-
   categoryId String? @db.ObjectId // ID of the associated category
   category Category? @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 
@@ -38,6 +38,7 @@ model Job {
   updatedAt DateTime @updatedAt
 
   @@index([categoryId])
+  @@fulltext([title])
 }
 
 // Model representing job categories
