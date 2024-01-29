@@ -17,12 +17,30 @@ export const NavbarRoutes = () => {
 
   return(
     <>
-    {isSearchPage && (
+    <div className="flex gap-x-2 ml-auto">
+    {isSearchPage ? (
       <div className="hidden md:block">
         <SearchInput />
       </div>
+    ) : (
+      <div className="">
+        <Link href="/home">
+          <Button size="sm" className="text-xl font-bold" variant="ghost">
+            Home
+          </Button>
+        </Link>
+        <Link href="/about">
+          <Button size="sm" className="text-xl font-bold" variant="ghost">
+            About Us
+          </Button>
+        </Link>
+        <Link href="/contact">
+          <Button size="sm" className="text-xl font-bold" variant="ghost">
+            Contact Us
+          </Button>
+        </Link>
+      </div>
     )}
-    <div className="flex gap-x-2 ml-auto">
       {isClientPage || isJobPage ? (
         <Link href="/">
         <Button size="sm" variant="ghost">
@@ -32,7 +50,7 @@ export const NavbarRoutes = () => {
         </Link>
       ) : (
         <Link href="/client/jobs">
-          <Button size="sm" variant="ghost">Client Mode</Button>
+          <Button size="sm" className="text-xl font-bold" variant="ghost">Find Talent</Button>
         </Link>
       )}
       <UserButton
