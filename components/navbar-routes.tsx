@@ -29,20 +29,10 @@ export const NavbarRoutes = () => {
             Home
           </Button>
         </Link>
-        <Link href="/about">
-          <Button size="sm" className="text-xl font-bold" variant="ghost">
-            About Us
-          </Button>
-        </Link>
-        <Link href="/contact">
-          <Button size="sm" className="text-xl font-bold" variant="ghost">
-            Contact Us
-          </Button>
-        </Link>
       </div>
     )}
       {isClientPage || isJobPage ? (
-        <Link href="/">
+        <Link href="/search">
         <Button size="sm" variant="ghost">
           <LogOut className="h-4 w-4 mr-2"/>
           Exit
