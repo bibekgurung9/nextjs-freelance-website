@@ -20,10 +20,7 @@ import { CardWrapper } from "./card-wrapper";
 import { FormSuccess } from "../form-success";
 import { FormError } from "../form-error";
 import { Button } from "@/components/ui/button";
-import toast from "react-hot-toast";
 import React from "react";
-import axios from "axios";
-import router from "next/router";
 import { signup } from "@/actions/signup";
 
 export const SignupForm = () => {
@@ -50,13 +47,11 @@ export const SignupForm = () => {
       .then((data) => {
         setError(data.error);
         setSuccess(data.success)
-
       })
     })  
 
   }
 
-  
   return (
     <CardWrapper
       headerLabel="Create an Account! "

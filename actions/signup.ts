@@ -34,5 +34,4 @@ export const signup = async (values : z.infer<typeof SignupSchema>) => {
 
   //Send Verification Token Email
   return { success : "User Created!"}
-  console.log(values);
 }
