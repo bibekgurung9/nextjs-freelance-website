@@ -29,6 +29,12 @@ model Account {
   @@unique([provider, providerAccountId])
 }
 
+// Enum representing user roles
+enum UserRole {
+  CLIENT
+  FREELANCER
+}
+
 //User Model
 model User {
   id  String  @id @default(auto()) @map("_id") @db.ObjectId
@@ -37,6 +43,7 @@ model User {
   emailVerified DateTime?
   image         String?
   password      String?
+  role UserRole @default(CLIENT)
   accounts      Account[]
 }
 
@@ -49,7 +56,6 @@ model Job {
   imageUrl String?
   price Int?
   isPublished Boolean @default(false)
-  
 
   categoryId String? @db.ObjectId // ID of the associated category
   category Category? @relation(fields: [categoryId], references: [id], onDelete: Cascade)
@@ -156,23 +162,6 @@ model StripeClient{
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-}
-
-//model representing users
-model User{
-  id String @id @default(auto()) @map("_id") @db.ObjectId 
-  email String @unique
-  password String
-  role UserRole
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-// Enum representing user roles
-enum UserRole {
-  CLIENT
-  FREELANCER
 }
 
 // Model representing client profiles
