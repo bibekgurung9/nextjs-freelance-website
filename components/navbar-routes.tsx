@@ -17,7 +17,7 @@ export const NavbarRoutes = () => {
 
   return(
     <>
-    <div className="flex gap-x-2 ml-auto">
+    <div className="flex gap-x-4 ml-auto">
     {isSearchPage ? (
       <div className="hidden md:block">
         <SearchInput />

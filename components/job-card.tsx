@@ -8,15 +8,16 @@ interface JobCardProps {
   price: number;
   progress: number | null;
   category: string;
+  description: string | null
 };
 
 export const JobCard = ({
   id,
   title,
-  chaptersLength,
   price,
   progress,
   category,
+  description,
 } : JobCardProps) => {
   return(
     <Link href={`/jobs/${id}`}>
@@ -31,11 +32,14 @@ export const JobCard = ({
               {formatPrice(price)}
             </p>  
           )}
-          <div className="text-lg md:text-base font-medium group-hover:text-sky-7-- transi line-clamp-2">
+          <div className="text-lg md:text-base font-medium group-hover:text-sky-700 transition line-clamp-2">
             {title}
           </div>
           <p className="text-xs">
             {category}
+          </p>
+          <p className="text-sm line-clamp-2">
+            {description}
           </p>
         </div>
       </div>

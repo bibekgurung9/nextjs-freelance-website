@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from 'react-hook-form'
 import { useRouter } from "next/navigation";
 import axios from "axios"
-import React from 'react'
+import React, { useEffect } from 'react'
 import Link from "next/link";
 import toast from "react-hot-toast";
 import {
@@ -36,7 +36,7 @@ const CreatePage = () => {
 
 const { isSubmitting, isValid } = form.formState;
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+const onSubmit = async (values: z.infer<typeof formSchema>) => {
 
     try{
       const response = await axios.post("/api/jobs", values);
@@ -46,6 +46,11 @@ const { isSubmitting, isValid } = form.formState;
       toast.error("Something Went Wrong!")
     }
   }
+
+  useEffect(() => {
+    // Refresh the page on component mount
+    router.replace('/client/create');
+  }, []);
 
   return (
     

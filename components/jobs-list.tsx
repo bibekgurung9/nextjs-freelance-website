@@ -16,7 +16,7 @@ export const JobsList = ({
 }:JobsListProps) => {
   return(
     <div>
-      <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 gap-4">
         {items.map((item) => (
           <JobCard
             key={item.id}
@@ -26,6 +26,7 @@ export const JobsList = ({
             price={item.price!}
             progress={item.progress}
             category={item?.category?.name!}
+            description={item?.description}
             />
         ))}
       </div>
