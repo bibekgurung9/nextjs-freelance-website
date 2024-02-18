@@ -2,6 +2,7 @@ import { auth } from "@clerk/nextjs";
 import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
 import { getProgress } from "@/actions/get-progress";
+import JobSidebar from "./_components/job-sidebar";
 
 const JobLayout = async ({
     children,
@@ -46,14 +47,15 @@ const JobLayout = async ({
 
     const progressCount = await getProgress(userId, job.id);
 
-
     return (
       <div className="h-full">
-        <div className="hidden md:flex h-full w-80 flex-col fixed inset-y-0">
-          JobSid
-
-        </div>
-        {children}
+        <div>
+          <h1>{job.title}</h1>
+        </div>    
+        <main className="h-full">
+          {children}
+        </main>
+        
       </div>
     )
   }
