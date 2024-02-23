@@ -1,5 +1,6 @@
 import { db } from "@/lib/db";
 import { Category, Chapter, Job } from "@prisma/client";
+import { getProgress } from "./get-progress";
 
 type JobWithProgressWithCategory = Job & {
   category: Category;
@@ -12,7 +13,7 @@ type DashboardCourses = {
   jobsInProgress: JobWithProgressWithCategory[];
 }
 
-export const getDashboardJObs = async (userId: string): Promise<DashboardCourses> => {
+export const getDashboardJobs = async (userId: string): Promise<DashboardCourses> => {
   try{
     const recivedPayJobs = await db.payment.findMany({
       where: {
@@ -35,8 +36,19 @@ export const getDashboardJObs = async (userId: string): Promise<DashboardCourses
     const jobs = recivedPayJobs.map((pay) => pay.job) as JobWithProgressWithCategory[];
 
     for( let job of jobs){
-      const progress = await getProgress
+      const progress = await getProgress(userId, job.id);
+      job["progress"] = progress;
     }
+
+    const completedJobs = jobs.filter((job) => job.progress === 100);
+    const jobsInProgress = jobs.filter((job) =>(job.progress ?? 0) < 100);
+
+    return{
+      completedJobs,
+      jobsInProgress,
+    }
+
+
 
   } catch(error){
     console.log("[GET_DASHBOARD_COURSES]", error);
