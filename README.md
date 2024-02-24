@@ -4,11 +4,9 @@ FreelanceNepal is a modern e-commerce application built with Next.js, designed t
 ## Features
 - Freelancer Profiles: Create and customize profiles to showcase skills, experience, and previous work.
 - Project Listings: Post and browse projects with detailed descriptions, requirements, and budget information.
-- Secure Transactions: Facilitate secure transactions between clients and freelancers.
 - Real-time Communication: Enable real-time messaging for effective communication between clients and freelancers.
 - Search and Filters: Easily find freelancers and projects through search and filter options.
 - Responsive Design: A responsive and user-friendly interface for seamless user experience on various devices.
-
 
 ## Installation
 1. Clone the Repository:
@@ -99,9 +97,6 @@ To learn more about Next.js, take a look at the following resources:
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
