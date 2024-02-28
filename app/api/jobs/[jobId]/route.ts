@@ -2,7 +2,6 @@ import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
 import { db } from "@/lib/db";
-import { isClient } from "@/lib/client";
 
 export async function DELETE(
   req: Request,
@@ -11,7 +10,7 @@ export async function DELETE(
     try{
       const { userId } = auth();
     
-      if(!userId || !isClient(userId)){
+      if(!userId){
         return new NextResponse("Unauthorized", {status: 401})
       }
     
@@ -56,7 +55,7 @@ export async function PATCH(
   const { jobId } = params;
   const values = await req.json();
 
-  if(!userId || !isClient(userId)){
+  if(!userId){
     return new NextResponse("Unauthorized", {status: 401})
   }
 
